@@ -1,4 +1,5 @@
 const express = require('express');
+const pageRoute = require('./routes/pageRoute.js');
 
 const app = express();
 
@@ -10,16 +11,7 @@ app.use(express.static('public'));
 
 const port = 3000;
 
-app.get('/', (req, res) => {
-  res.status(200).render('index', {
-    page_name: 'index',
-  });
-});
-app.get('/about', (req, res) => {
-  res.status(200).render('about', {
-    page_name: 'about',
-  });
-});
+app.use('/', pageRoute);
 
 app.listen(port, () => {
   console.log('app start');
