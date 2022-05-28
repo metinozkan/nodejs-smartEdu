@@ -7,6 +7,10 @@ const CourseSchema = new Schema({
   description: { type: String, required: true, trim: true },
   createdAt: { type: Date, default: Date.now },
   slug: { type: String, unique: true },
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category',
+  },
 });
 
 CourseSchema.pre('validate', function (next) {
