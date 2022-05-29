@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
+const session = require('express-session');
 
 exports.createUser = async (req, res) => {
   try {
@@ -42,4 +43,10 @@ exports.loginUser = async (req, res) => {
       error,
     });
   }
+};
+
+exports.logoutUser = async (req, res) => {
+  req.session.destroy(() => {
+    res.redirect('/');
+  });
 };

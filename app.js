@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const pageRoute = require('./routes/pageRoute.js');
 const courseRoute = require('./routes/courseRoute');
 const categoryRoute = require('./routes/categoryRoute');
@@ -28,8 +29,12 @@ app.use(
     secret: 'my_keyboard_cat', // Buradaki texti değiştireceğiz.
     resave: false,
     saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl: 'mongodb://localhost:27017/smartedu-db',
+    }),
   })
 );
+
 // app.use(cookieParser());
 
 const port = 3000;
