@@ -29,7 +29,7 @@ exports.loginUser = async (req, res) => {
           if (same) {
             // USER SESSION
             req.session.userID = user._id;
-            res.status(200).redirect('/');
+            res.status(200).redirect('/dashboard');
           } else {
             res.status(400).send('Password wrong');
           }
