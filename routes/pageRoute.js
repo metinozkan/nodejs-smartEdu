@@ -1,13 +1,17 @@
 const express = require('express');
 
 const pageController = require('../controllers/pageController.js');
+const authMiddleware = require('../middlewares/authMiddleware.js');
+const redirectMiddleware = require('../middlewares/redirectMiddleware.js');
 
 const router = express.Router();
 
 router.route('/').get(pageController.getIndexPage);
 router.route('/about').get(pageController.getAboutPage);
-router.route('/register').get(pageController.getRegisterPage);
-router.route('/login').get(pageController.getLoginPage);
-router.route('/dashboard').get(pageController.getDashboardPage);
+router
+  .route('/register')
+  .get(redirectMiddleware, pageController.getRegisterPage);
+router.route('/login').get(redirectMiddleware, pageController.getLoginPage);
+router.route('/dashboard').get(authMiddleware, pageController.getDashboardPage);
 
 module.exports = router;
