@@ -50,9 +50,11 @@ exports.getCourse = async (req, res) => {
     const course = await Course.findOne({ slug: req.params.slug }).populate(
       'user'
     );
+    const user = await User.findById(req.session.userID);
     res.status(200).render('course', {
       page_name: 'courses',
       course,
+      user,
     });
   } catch (error) {
     res.status(400).json({
@@ -68,6 +70,20 @@ exports.enrollCourse = async (req, res, next) => {
     if (!user.courses.includes(req.body.course_id)) {
       await user.courses.push({ _id: req.body.course_id });
     }
+    await user.save();
+    res.status(200).redirect('/dashboard');
+  } catch (error) {
+    res.status(400).json({
+      status: 'fail',
+      error,
+    });
+  }
+};
+
+exports.releaseCourse = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.session.userID);
+    await user.courses.pull({ _id: req.body.course_id });
     await user.save();
     res.status(200).redirect('/dashboard');
   } catch (error) {

@@ -20,6 +20,8 @@
           </div>
           <div class="post-content">
             <div class="post-date">
+              <%
+              if(user&&user.role=="student"&&!user.courses.includes(course._id)){%>
               <form method="POST" action="/courses/enroll">
                 <input
                   type="hidden"
@@ -30,6 +32,7 @@
                   Enroll
                 </button>
               </form>
+              <% }%>
             </div>
             <div class="meta-info-blog">
               <span

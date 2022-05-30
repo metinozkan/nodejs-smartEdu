@@ -15,14 +15,13 @@ if(user.role=="student"){%>
         <div class="blog-author">
           <div class="author-bio">
             <h3 class="author_name">Courses enrolled by:<%= user.name %></h3>
-  
         </div>
       </div>
       <!-- end col -->
     </div>
     <!-- end row -->
     <div class="row mt-5">
-		<% for (let i =0;i<user.courses.length-1;i++) { %>
+		<% for (let i =0;i<user.courses.length;i++) { %>
 		<div class="col-lg-6 col-md-6 col-12">
          <div class="course-item mb-5">
           <div class="image-blog">
@@ -36,6 +35,16 @@ if(user.role=="student"){%>
               <p>
                <%= user.courses[i].description %>
               </p>
+               <form method="POST" action="/courses/release">
+                <input
+                  type="hidden"
+                  name="course_id"
+                  value="<%=user.courses[i]._id %>"
+                />
+                <button class="btn btn-lg btn-danger text-white">
+                  RELEASE
+                </button>
+              </form>
             </div>
           </div>
         </div>
@@ -85,7 +94,7 @@ if(user.role=="student"){%>
     <!-- end row -->
     <div class="row mt-5">
 		
-		<% for (let i =0;i<courses.length-1;i++) { %>
+		<% for (let i =0;i<courses.length;i++) { %>
 		<div class="col-lg-6 col-md-6 col-12">
          <div class="course-item mb-5">
           <div class="image-blog">
